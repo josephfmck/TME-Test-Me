@@ -16,6 +16,20 @@ class Runner {
 
     async runTests() {
         for(let file of this.testFiles) {
+            //global: nodejs var, similar to window but for js
+            //is available to every file
+            const beforeEaches = [];
+            global.beforeEach = (fn) => {
+                beforeEaches.push(fn);
+            };
+
+            //global allows us to use mocha it func here
+            global.it = (desc, fn) => {
+                //call each func
+                beforeEaches.forEach(func => func());
+                fn(); //then we call func
+            };
+
             require(file.name); //node will find file, load up and execute code inside 
         }
     }
