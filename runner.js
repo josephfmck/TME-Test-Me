@@ -33,10 +33,11 @@ class Runner {
 
                 try {                
                     fn(); //then run it statement
-                    console.log(chalk.green(`ran global.it statement: OK - ${desc}`));
+                    console.log(chalk.green(`\t ran global.it statement: OK - ${desc}`));
                 } catch (err) {
-                    console.log(chalk.red(`X - ${desc}`));
-                    console.log(chalk.red("\t", err.message)); //only err message, \t indents message
+                    const message = err.message.replace(/\n/g, "\n\t\t"); //find every newline, replace with newline and 2 tabs
+                    console.log(chalk.red(`\t X - ${desc}`));
+                    console.log(chalk.red("\t", message)); //only err message, \t indents message
                 }
 
             };
