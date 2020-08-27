@@ -2,6 +2,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const chalk = require("chalk");
 
 
 //*finds all files in ".test.js" recursively through a folder
@@ -16,6 +17,8 @@ class Runner {
 
     async runTests() {
         for(let file of this.testFiles) {
+            console.log(chalk.gray(`---${file.shortName}`));
+
             //global: nodejs var, similar to window but for js
             //is available to every file
             const beforeEaches = [];
@@ -30,10 +33,10 @@ class Runner {
 
                 try {                
                     fn(); //then run it statement
-                    console.log(`ran global.it statement: OK - ${desc}`);
+                    console.log(chalk.green(`ran global.it statement: OK - ${desc}`));
                 } catch (err) {
-                    console.log(`X - ${desc}`);
-                    console.log("\t", err.message); //only err message, \t indents message
+                    console.log(chalk.red(`X - ${desc}`));
+                    console.log(chalk.red("\t", err.message)); //only err message, \t indents message
                 }
 
             };
@@ -43,7 +46,7 @@ class Runner {
             try {
                 require(file.name); //node will find file, load up and execute code inside 
             } catch(err) {
-                console.log(err);
+                console.log(chalk.red(err));
             }
         }
     }
@@ -63,7 +66,7 @@ class Runner {
 
             //check if file or directory
             if (stats.isFile() && file.includes(".test.js")) {
-                this.testFiles.push({ name: filepath });
+                this.testFiles.push({ name: filepath, shortName: file });
             } else if (stats.isDirectory()) {
                 //arr of dir's childFiles
                 const childFiles = await fs.promises.readdir(filepath);
