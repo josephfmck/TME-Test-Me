@@ -13,6 +13,12 @@ class Runner {
         //store absolute path references of testFiles 
         this.testFiles = [];
     }
+
+    async runTests() {
+        for(let file of this.testFiles) {
+            require(file.name); //node will find file, load up and execute code inside 
+        }
+    }
     
     //Breadth First directory search algorithm
     //targetPath is absolute path we want to search through
@@ -31,14 +37,14 @@ class Runner {
             if (stats.isFile() && file.includes(".test.js")) {
                 this.testFiles.push({ name: filepath });
             } else if (stats.isDirectory()) {
-                //arr
+                //arr of dir's childFiles
                 const childFiles = await fs.promises.readdir(filepath);
 
                 //push all els of childFiles
                 files.push(...childFiles.map(f => 
                     path.join(file, f)
                 )); 
-                //map will join the earlier file folders of the path to current file so no errors
+                //map will join the earlier file folders of the path to current file to get full path of each childFiles
                 //before map: /Users/Joe/widgets 
                 //after map: /Users/Joe/Movies/widgets
             }
