@@ -27,10 +27,24 @@ class Runner {
             global.it = (desc, fn) => {
                 //call each func
                 beforeEaches.forEach(func => func());
-                fn(); //then we call func
+
+                try {                
+                    fn(); //then run it statement
+                    console.log(`ran global.it statement: OK - ${desc}`);
+                } catch (err) {
+                    console.log(`X - ${desc}`);
+                    console.log("\t", err.message); //only err message, \t indents message
+                }
+
             };
 
-            require(file.name); //node will find file, load up and execute code inside 
+
+            //wrap with try/catch to shorten syntax errors
+            try {
+                require(file.name); //node will find file, load up and execute code inside 
+            } catch(err) {
+                console.log(err);
+            }
         }
     }
     

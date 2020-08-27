@@ -17,11 +17,11 @@ it("should sum an array", () => {
 
     //assert test
     assert.strictEqual(total, 6);
-    numbers.push(3);
+    numbers.push(3); //throw in bug thats fixed by global.it in runner.js
 });
 
 it("beforeEach is ran each time", () => {
-    assert.strictEqual(numbers.length, 3);
+    assert.strictEqual(numbers.length, 4);
 });
 
 //to run in terminal normally: mocha
