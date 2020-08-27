@@ -8,8 +8,8 @@ const runner = new Runner();
 
 //helper function to use async await
 const run = async () => {
-    const results = await runner.collectFiles(process.cwd()); //current working directory tme is executed from, WORKS FOR ANY directory
-    console.log(results);
+    await runner.collectFiles(process.cwd()); //ANY current working directory tme is executed from
+    console.log(runner.testFiles);
 };
 
 
