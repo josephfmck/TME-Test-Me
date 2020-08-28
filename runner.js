@@ -3,6 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 const chalk = require("chalk");
+const render = require("./render");
 
 //directories we want to ignore test files in, like node modules
 const forbiddenDirs = ["node_modules"];
@@ -25,6 +26,10 @@ class Runner {
             //global: nodejs var, similar to window but for js
             //is available to every file
             const beforeEaches = [];
+
+            //JSDOM renders html to test
+            global.render = render;
+
             global.beforeEach = (fn) => {
                 beforeEaches.push(fn);
             };
