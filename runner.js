@@ -23,24 +23,25 @@ class Runner {
         for(let file of this.testFiles) {
             console.log(chalk.gray(`---${file.shortName}`));
 
-            //global: nodejs var, similar to window but for js
-            //is available to every file
+
             const beforeEaches = [];
 
             //JSDOM renders html to test
             global.render = render;
 
+            //global: nodejs var, similar to window but for js
+            //is available to every file
             global.beforeEach = (fn) => {
                 beforeEaches.push(fn);
             };
 
             //global allows us to use mocha it func here
-            global.it = (desc, fn) => {
+            global.it = async (desc, fn) => {
                 //call each func
                 beforeEaches.forEach(func => func());
 
                 try {                
-                    fn(); //then run it statement
+                    await fn(); //run function passed in to it
                     console.log(chalk.green(`\t ran global.it statement: OK - ${desc}`));
                 } catch (err) {
                     const message = err.message.replace(/\n/g, "\n\t\t"); //find every newline, replace with newline and 2 tabs
