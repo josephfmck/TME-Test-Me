@@ -4,6 +4,9 @@ const fs = require("fs");
 const path = require("path");
 const chalk = require("chalk");
 
+//directories we want to ignore test files in, like node modules
+const forbiddenDirs = ["node_modules"];
+
 
 //*finds all files in ".test.js" recursively through a folder
 //*Store a reference to each file we find
@@ -68,7 +71,7 @@ class Runner {
             //check if file or directory
             if (stats.isFile() && file.includes(".test.js")) {
                 this.testFiles.push({ name: filepath, shortName: file });
-            } else if (stats.isDirectory()) {
+            } else if (stats.isDirectory() && !forbiddenDirs.includes(file)) {
                 //arr of dir's childFiles
                 const childFiles = await fs.promises.readdir(filepath);
 
