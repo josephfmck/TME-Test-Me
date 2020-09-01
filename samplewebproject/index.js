@@ -7,10 +7,10 @@ document.querySelector("form").addEventListener("submit", (event) => {
 
     if(value.includes("@")) {
         // valid
-        header.innerHTML = "looks good";
+        header.innerHTML = "looks good@!";
     } else {
         //invalid
-        header.innerHTML = "invalid email";
+        header.innerHTML = "invalid email@!";
     }
 });
 
