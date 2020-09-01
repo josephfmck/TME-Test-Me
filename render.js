@@ -13,7 +13,15 @@ const render = async (filename) => {
         resources: "usable"
     });
 
-    return dom;
+
+    //fix issue with delay by wrapping with promise
+    return new Promise((resolve, reject) => {
+        //waits until all dom els (scripts) were referencing to be loaded before executing
+        dom.window.document.addEventListener("DOMContentLoaded", () => {
+            resolve(dom);
+        });
+    });
+
 };
 
 module.exports = render; //export function NOT executed, run in runner.js

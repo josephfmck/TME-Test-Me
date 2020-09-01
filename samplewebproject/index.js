@@ -13,3 +13,4 @@ document.querySelector("form").addEventListener("submit", (event) => {
         header.innerHTML = "invalid email";
     }
 });
+
